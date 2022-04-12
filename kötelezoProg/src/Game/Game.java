@@ -15,6 +15,8 @@ public class Game {
         Hos ellenfel = hos.createEllenfel();
         Scanner sc = new Scanner(System.in);
 
+        System.out.println(ellenfel.toString());
+
       chooseLevel(nehezseg, hos, sc);
       choosHosTulajdonsag(hos,sc);
       chooseVarazslatok(hos, sc);

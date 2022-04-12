@@ -29,16 +29,15 @@ public class Hos {
 
     public Hos createEllenfel(){
         Random rnd = new Random();
-        int value = rnd.nextInt((10 - 1) + 1) + 1;
-        int arany = rnd.nextInt((1300 - 500) + 500) + 500;
         Hos h = new Hos();
-        h.setTamadas(value);
-        h.setVedekezes(value);
-        h.setVarazsero(value);
-        h.setSzerencse(value);
-        h.setMoral(value);
-        h.setTudas(value);
-        h.setArany2(arany);
+        h.setTamadas(rnd.nextInt((10 - 1) + 1) + 1);
+        h.setVedekezes(rnd.nextInt((10 - 1) + 1) + 1);
+        h.setVarazsero(rnd.nextInt((10 - 1) + 1) + 1);
+        h.setSzerencse(rnd.nextInt((10 - 1) + 1) + 1);
+        h.setMoral(rnd.nextInt((10 - 1) + 1) + 1);
+        h.setTudas(rnd.nextInt((10 - 1) + 1) + 1);
+        h.setArany2(rnd.nextInt((1300 - 500) + 500) + 500);
+        h.setMana();
         return h;
     }
 
@@ -203,5 +202,20 @@ public class Hos {
         }else{
             System.err.println("Nincs elég aranyad!");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Hos{" +
+                "tamadas=" + tamadas +
+                ", vedekezes=" + vedekezes +
+                ", varazsero=" + varazsero +
+                ", tudas=" + tudas +
+                ", moral=" + moral +
+                ", szerencse=" + szerencse +
+                ", ar=" + ar +
+                ", arany=" + arany +
+                ", mana=" + mana +
+                '}';
     }
 }
