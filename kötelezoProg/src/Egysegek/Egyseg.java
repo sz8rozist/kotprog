@@ -105,13 +105,16 @@ public class Egyseg {
             for(int i = 0; i<egyseg.length; i++){
                 if(egyseg[i] == null){
                     setDarab(darab);
+                    setEletero(darab * this.getEletero());
+                    int[] s = {darab * getSebzes()[0], darab * getSebzes()[1]};
+                    setSebzes(s);
                     egyseg[i] = this;
                     if(h.vanelegArany(this.getAr() * darab)){
                         int arany = h.getArany();
                         arany -= this.getDarab() * this.getAr();
                         h.setArany2(arany);
                     }
-                    System.out.println("Arany: "+ h.getArany());
+                    //System.out.println("Arany: "+ h.getArany());
                 }
                 if(egyseg[i].getNev().equals(this.getNev())){
                     break;

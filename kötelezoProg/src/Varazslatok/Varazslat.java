@@ -1,7 +1,6 @@
 package Varazslatok;
 
 import Hos.Hos;
-import Colors.*;
 
 public class Varazslat {
     private int ar;
@@ -62,11 +61,19 @@ public class Varazslat {
                         arany -= this.getDarab() * this.getAr();
                         h.setArany2(arany);
                     }
-                    System.out.println(Colors.ANSI_YELLOW + "Arany: "+ h.getArany() + Colors.ANSI_RESET);
+                    //System.out.println(Colors.ANSI_YELLOW + "Arany: "+ h.getArany() + Colors.ANSI_RESET);
                 }
                 if(varazs[i].getNev().equals(this.getNev())){
                     break;
                 }
             }
+    }
+
+    public boolean vanElegMana(int hosMana){
+        if(mana > hosMana){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

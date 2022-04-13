@@ -5,6 +5,15 @@ import Colors.*;
 
 public class Palya {
     String [][] palya = new String[11][13];
+
+    public String[][] getPalya() {
+        return palya;
+    }
+
+    public void setPalya(String[][] palya) {
+        this.palya = palya;
+    }
+
     public Palya(){
         for (int i=0; i<10; i++) {
             for (int j=0; j<12; j++) {
@@ -29,8 +38,8 @@ public class Palya {
         palya[10][4] = "E";
         palya[10][5] = "F";
         palya[10][6] = "G";
-        palya[10][7] = "H";
-        palya[10][8] = "I";
+        palya[10][7] = "K";
+        palya[10][8] = "L";
         palya[10][9] = "J";
         palya[10][10] = "H";
         palya[10][11] = "I";
@@ -62,6 +71,26 @@ public class Palya {
                         }
                         return true;
                     }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean ellenfelEgysegeinekElhelyezese(Egyseg e, String oszlop, int sor){
+        for (int i = 0; i < 11; i++) {
+            for (int j = 0; j < 13; j++) {
+                if(palya[10][j].equals(oszlop) && palya[i][12].equals(Integer.toString(sor))){
+                    if(!palya[i][j].equals(" ")){
+                        return false;
+                    }
+                    String firstChar = String.valueOf(e.getNev().charAt(0));
+                    switch (e.getNev()) {
+                        case "Földműves" -> palya[i][j] = Colors.ANSI_BLUE + firstChar + Colors.ANSI_RESET;
+                        case "Griff" -> palya[i][j] = Colors.ANSI_YELLOW + firstChar + Colors.ANSI_RESET;
+                        case "Íjász" -> palya[i][j] = Colors.ANSI_RED + firstChar + Colors.ANSI_RESET;
+                    }
+                    return true;
                 }
             }
         }

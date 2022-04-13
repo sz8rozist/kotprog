@@ -1,6 +1,8 @@
 package Hos;
 
+import Colors.Colors;
 import Egysegek.Egyseg;
+import Varazslatok.Feltamasztas;
 import Varazslatok.Varazslat;
 
 import java.util.Random;
@@ -18,6 +20,25 @@ public class Hos {
 
     public Varazslat[] varazslat = new Varazslat[5];
     public Egyseg[] egyseg = new Egyseg[5];
+
+    public Varazslat[] ellenfelVarazslat = new Varazslat[5];
+    public Egyseg[] ellenfelEgyseg = new Egyseg[5];
+
+    public Varazslat[] getEllenfelVarazslat() {
+        return ellenfelVarazslat;
+    }
+
+    public void setEllenfelVarazslat(Varazslat[] ellenfelVarazslat) {
+        this.ellenfelVarazslat = ellenfelVarazslat;
+    }
+
+    public Egyseg[] getEllenfelEgyseg() {
+        return ellenfelEgyseg;
+    }
+
+    public void setEllenfelEgyseg(Egyseg[] ellenfelEgyseg) {
+        this.ellenfelEgyseg = ellenfelEgyseg;
+    }
 
     public Varazslat[] getVarazslat() {
         return varazslat;
@@ -204,18 +225,40 @@ public class Hos {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Hos{" +
-                "tamadas=" + tamadas +
-                ", vedekezes=" + vedekezes +
-                ", varazsero=" + varazsero +
-                ", tudas=" + tudas +
-                ", moral=" + moral +
-                ", szerencse=" + szerencse +
-                ", ar=" + ar +
-                ", arany=" + arany +
-                ", mana=" + mana +
-                '}';
+    public boolean vanKivalasztvaSereg(){
+        for(Egyseg e : egyseg){
+            if(e != null){
+                return true;
+            }
+        }
+        return false;
+    }
+    public void ellenfelAdatai(){
+        System.out.println();
+        System.out.println(Colors.ANSI_BLUE + "Az ellenfél adatai"+ Colors.ANSI_RESET);
+        System.out.println("Támadás: "+getTamadas());
+        System.out.println("Védekezés: "+getVedekezes());
+        System.out.println("Varázserő: "+getVarazsero());
+        System.out.println("Tudás: "+getTudas());
+        System.out.println("Morál: "+getMoral());
+        System.out.println("Szerencse: "+getSzerencse());
+        System.out.println("Mana: "+getMana());
+
+        System.out.println(Colors.ANSI_BLUE +"Az ellenfél varázserői:"+ Colors.ANSI_RESET);
+        for(Varazslat v : ellenfelVarazslat){
+            if(v != null){
+                System.out.println("Varázslat: " + v.getNev() + " db: "+ v.getDarab());
+            }
+        }
+        System.out.println(Colors.ANSI_BLUE +"Az ellenfél egységei:"+ Colors.ANSI_RESET);
+        for(Egyseg v : ellenfelEgyseg){
+            if(v != null){
+                System.out.println("Egység: " + v.getNev() + " db: "+v.getDarab());
+            }
+        }
+    }
+
+    public void hosTamad(Egyseg ellenfelEgyseg){
+        ellenfelEgyseg.setEletero(ellenfelEgyseg.getEletero() - this.getTamadas() * 10);
     }
 }
