@@ -64,11 +64,7 @@ public class Palya {
                             return false;
                         }
                         String firstChar = String.valueOf(e.getNev().charAt(0));
-                        switch (e.getNev()) {
-                            case "Földműves" -> palya[i][j] = Colors.ANSI_BLUE + firstChar + Colors.ANSI_RESET;
-                            case "Griff" -> palya[i][j] = Colors.ANSI_YELLOW + firstChar + Colors.ANSI_RESET;
-                            case "Íjász" -> palya[i][j] = Colors.ANSI_RED + firstChar + Colors.ANSI_RESET;
-                        }
+                        palya[i][j] = firstChar.toLowerCase();
                         return true;
                     }
                 }
@@ -85,15 +81,55 @@ public class Palya {
                         return false;
                     }
                     String firstChar = String.valueOf(e.getNev().charAt(0));
-                    switch (e.getNev()) {
-                        case "Földműves" -> palya[i][j] = Colors.ANSI_BLUE + firstChar + Colors.ANSI_RESET;
-                        case "Griff" -> palya[i][j] = Colors.ANSI_YELLOW + firstChar + Colors.ANSI_RESET;
-                        case "Íjász" -> palya[i][j] = Colors.ANSI_RED + firstChar + Colors.ANSI_RESET;
-                    }
+                    palya[i][j] = firstChar;
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    public Egyseg legnagyobbKezdemenyezesu(Egyseg[] egyseg){
+        Egyseg legnagyobbKezdemenyezesu = null;
+        int max = 0;
+        for(Egyseg e : egyseg){
+            if(e != null){
+                if(e.getKezdemenyezes() > max){
+                    max = e.getKezdemenyezes();
+                }
+                if(e.getKezdemenyezes() == max){
+                    legnagyobbKezdemenyezesu = e;
+                }
+            }
+        }
+        return legnagyobbKezdemenyezesu;
+    }
+    
+    public void mozgas(Egyseg[] egysegek, int hanyEgyseg, int merre){
+        Egyseg legnagyobbKezdemenyezesu = legnagyobbKezdemenyezesu(egysegek);
+        String firstLetter = String.valueOf(legnagyobbKezdemenyezesu.getNev().charAt(0)).toLowerCase();
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 12; j++) {
+                if(merre == 1){
+                    if(!palya[i][j + hanyEgyseg].equals(" ")){
+                        break;
+                    }
+                    if(hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || j + hanyEgyseg > 12){
+                        break;
+                    }
+                    if(palya[i][j].equals(firstLetter)){
+                        palya[i][j + hanyEgyseg] = firstLetter;
+                        palya[i][j] = " ";
+                        break;
+                    }
+                }else if(merre == 2){
+
+                }else if(merre == 3){
+
+                }else if(merre == 4){
+
+                }
+            }
+        }
     }
 }

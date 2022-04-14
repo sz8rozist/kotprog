@@ -15,7 +15,7 @@ public class Hos {
     protected int moral;
     protected int szerencse;
     protected double ar;
-    protected int arany;
+    protected int arany = 1000;
     protected int mana;
 
     public Varazslat[] varazslat = new Varazslat[5];

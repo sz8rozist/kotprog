@@ -6,6 +6,7 @@ import Palya.Palya;
 import Varazslatok.*;
 import Colors.*;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -28,9 +29,9 @@ public class Game {
         Griff griff = new Griff();
         Ijasz ijasz = new Ijasz();
 
-      chooseLevel(nehezseg, hos, sc);
-      choosHosTulajdonsag(hos,sc);
-      chooseVarazslatok(hos, sc, feltamasztas, tuzlabda, villamcsapas, tornado,nyilzapor);
+      //chooseLevel(nehezseg, hos, sc);
+     // choosHosTulajdonsag(hos,sc);
+     // chooseVarazslatok(hos, sc, feltamasztas, tuzlabda, villamcsapas, tornado,nyilzapor);
       chooseSereg(hos,sc, foldmuves, griff, ijasz);
       ellenfelBeallitas(feltamasztas, tuzlabda, villamcsapas, tornado, nyilzapor, foldmuves, griff, ijasz, ellenfel, rnd);
       egysegElhelyezese(p, hos,sc, ellenfel, rnd);
@@ -215,20 +216,31 @@ public class Game {
         System.out.println(Colors.ANSI_BLUE +"<----------------------------- Kezdődjön a játék! ----------------------------->"+Colors.ANSI_RESET);
         p.printPalya();
         String karakter;
+        int szam = 0;
+        int hanyEgyseg = 0;
+        int merre = 0;
         System.out.print(Colors.ANSI_GREEN + "Egységgel szeretnél lépni vagy a hősöddel? (e/h) "+ Colors.ANSI_RESET);
         karakter = sc.next();
         switch (karakter){
             case "e":
-                int counter = -1;
-                System.out.println("Az egységeid melyekkel lépni tudsz");
-                for (int i = 0; i < hos.getEgyseg().length; i++) {
-                    counter++;
-                    if(hos.getEgyseg()[i] != null){
-                        System.out.println(i + " - " + hos.getEgyseg()[i].getNev() + ": kezdeményezése: "+hos.getEgyseg()[i].getKezdemenyezes());
-                    }
+                System.out.println("1 - Mozgás");
+                System.out.println("2 - Várakozás");
+                System.out.println("3 - Támadás");
+                System.out.print("Mit szeretnél tenni az egységgel?: ");
+                szam = sc.nextInt();
+                switch (szam){
+                    case 1:
+                        System.out.print("Merre mozogjon? (1 - előre, 2 - hátra, 3 - jobbra, 4 - balra)");
+                        merre = sc.nextInt();
+                        System.out.print("Hány egységet mozogjon?: ");
+                        hanyEgyseg = sc.nextInt();
+                        p.mozgas(hos.getEgyseg(), hanyEgyseg, merre);
+                        break;
+                    case 2:  break;
+                    case 3: break;
                 }
-                System.out.print("Melyik egységgel szeretnél lépni?: "); break;
             case "h": break;
         }
+        p.printPalya();
     }
 }
