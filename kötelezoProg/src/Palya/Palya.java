@@ -104,7 +104,7 @@ public class Palya {
         }
         return legnagyobbKezdemenyezesu;
     }
-    
+
     public void mozgas(Egyseg[] egysegek, int hanyEgyseg, int merre){
         Egyseg legnagyobbKezdemenyezesu = legnagyobbKezdemenyezesu(egysegek);
         String firstLetter = String.valueOf(legnagyobbKezdemenyezesu.getNev().charAt(0)).toLowerCase();
@@ -123,11 +123,43 @@ public class Palya {
                         break;
                     }
                 }else if(merre == 2){
-
+                    if(!palya[i][j - hanyEgyseg].equals(" ")){
+                        break;
+                    }
+                    if (hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || j - hanyEgyseg <= 0){
+                        break;
+                    }
+                    if(palya[i][j].equals(firstLetter)){
+                        palya[i][j - hanyEgyseg] = firstLetter;
+                        palya[i][j] = " ";
+                        break;
+                    }
                 }else if(merre == 3){
-
+                    if(i == 9){
+                        System.out.println(Colors.ANSI_RED + "Hiba! Nem tudsz felfele lepni mert a palya szelen vagy." + Colors.ANSI_RESET);
+                        break;
+                    }
+                    if (hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || i + hanyEgyseg > 9){
+                        break;
+                    }
+                    if(palya[i][j].equals(firstLetter)){
+                        palya[i + hanyEgyseg][j] = firstLetter;
+                        palya[i][j] = " ";
+                        break;
+                    }
                 }else if(merre == 4){
-
+                    if(i == 0){
+                        System.out.println(Colors.ANSI_RED + "Hiba! Nem tudsz felfele lepni mert a palya szelen vagy." + Colors.ANSI_RESET);
+                        break;
+                    }
+                    if (hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || i - hanyEgyseg < 0){
+                        break;
+                    }
+                    if(palya[i][j].equals(firstLetter)){
+                        palya[i - hanyEgyseg][j] = firstLetter;
+                        palya[i][j] = " ";
+                        break;
+                    }
                 }
             }
         }
