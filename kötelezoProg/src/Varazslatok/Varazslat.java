@@ -52,22 +52,15 @@ public class Varazslat {
         this.darab = darab;
     }
 
-    public void vasarol(Hos h, int darab, Varazslat[] varazs){
-        for(int i = 0; i<varazs.length; i++){
-                if(varazs[i] == null){
-                    setDarab(darab);
-                    varazs[i] = this;
-                    if(h.vanelegArany(this.getAr() * darab)){
-                        int arany = h.getArany();
-                        arany -= this.getDarab() * this.getAr();
-                        h.setArany2(arany);
-                    }
-                    //System.out.println(Colors.ANSI_YELLOW + "Arany: "+ h.getArany() + Colors.ANSI_RESET);
-                }
-                if(varazs[i].getNev().equals(this.getNev())){
-                    break;
-                }
+    public void vasarol(Hos h, int darab){
+        if(getDarab() == 0){
+            setDarab(darab);
+            if(h.vanelegArany(this.getAr() * darab)){
+                int arany = h.getArany();
+                arany -= this.getDarab() * this.getAr();
+                h.setArany2(arany);
             }
+        }
     }
 
     public boolean vanElegMana(int hosMana){
@@ -100,23 +93,21 @@ public class Varazslat {
         }
     }
 
-    public Egyseg legnagyobbKezdemenyezesu(Egyseg[] ellenfel){
+
+    public void tornado(Hos hos, Egyseg[] ellenfel){
         int max = 0;
+        Egyseg l = null;
         for(Egyseg e : ellenfel){
             if(e != null){
                 if(e.getKezdemenyezes() > max){
                     max = e.getKezdemenyezes();
                 }
                 if(e.getKezdemenyezes() == max){
-                    return e;
+                    l = e;
                 }
             }
         }
-        return null;
-    }
-
-    public void tornado(Hos hos, Egyseg[] ellenfel){
-        Egyseg l = legnagyobbKezdemenyezesu(ellenfel);
+        assert l != null;
         l.setEletero(0);
         hos.csokkentMana(hos.getMana() - getMana());
     }

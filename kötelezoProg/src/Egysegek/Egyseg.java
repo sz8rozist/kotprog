@@ -2,7 +2,7 @@ package Egysegek;
 
 import Hos.Hos;
 
-import java.util.Arrays;
+import java.util.Random;
 
 public class Egyseg {
     private String nev;
@@ -103,39 +103,101 @@ public class Egyseg {
         this.darab = darab;
     }
 
-    public void egysegVasarlas(Hos h, int darab, Egyseg[] egyseg){
-            for(int i = 0; i<egyseg.length; i++){
-                if(egyseg[i] == null){
-                    setDarab(darab);
-                    setEletero(darab * this.getEletero());
-                    int[] s = {darab * getSebzes()[0], darab * getSebzes()[1]};
-                    setSebzes(s);
-                    egyseg[i] = this;
-                    if(h.vanelegArany(this.getAr() * darab)){
-                        int arany = h.getArany();
-                        arany -= this.getDarab() * this.getAr();
-                        h.setArany2(arany);
-                    }
-                    //System.out.println("Arany: "+ h.getArany());
-                }
-                if(egyseg[i].getNev().equals(this.getNev())){
-                    break;
-                }
-            }
+    public void egysegVasarlas(Hos h, int darab){
+        setDarab(darab);
+        setEletero(darab * this.getEletero());
+        setKezdemenyezes(h.getMoral() + getKezdemenyezes());
+        int[] s = {darab * getSebzes()[0], darab * getSebzes()[1]};
+        setSebzes(s);
+        if(h.vanelegArany(this.getAr() * darab)){
+            int arany = h.getArany();
+            arany -= this.getDarab() * this.getAr();
+            h.setArany2(arany);
+        }
+        //System.out.println("Arany: "+ h.getArany());
     }
 
-    @Override
-    public String toString() {
-        return "Egyseg{" +
-                "nev='" + nev + '\'' +
-                ", darab=" + darab +
-                ", ar=" + ar +
-                ", sebzes=" + Arrays.toString(sebzes) +
-                ", eletero=" + eletero +
-                ", sebesseg=" + sebesseg +
-                ", kezdemenyezes=" + kezdemenyezes +
-                ", melyikOldalonAll='" + melyikOldalonAll + '\'' +
-                ", specialisKepesseg='" + specialisKepesseg + '\'' +
-                '}';
+    public boolean mozgas(int hanyEgyseg, int merre, String[][] palya){
+        String firstLetter = String.valueOf(this.getNev().charAt(0)).toLowerCase();
+        if(hanyEgyseg > 13){
+            return false;
+        }
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 12; j++) {
+                if(merre == 1){
+                    if(palya[i][j].equals(firstLetter)){
+                        if(!palya[i][j + hanyEgyseg].equals(" ")){
+                            return false;
+                        }
+                        if(hanyEgyseg < 1 || hanyEgyseg > this.getSebesseg() || j + hanyEgyseg > 12){
+                            return false;
+                        }
+                        palya[i][j + hanyEgyseg] = firstLetter;
+                        palya[i][j] = " ";
+                        return true;
+                    }
+                }else if(merre == 2){
+                    if(palya[i][j].equals(firstLetter)){
+                        if(!palya[i][j - hanyEgyseg].equals(" ")){
+                            return false;
+                        }
+                        if (hanyEgyseg < 1 || hanyEgyseg > this.getSebesseg() || j - hanyEgyseg < 0){
+                            return false;
+                        }
+                        palya[i][j - hanyEgyseg] = firstLetter;
+                        palya[i][j] = " ";
+                        return true;
+                    }
+                }else if(merre == 3){
+                    if(palya[i][j].equals(firstLetter)){
+                        if(i == 9){
+                            return false;
+                        }
+                        if (hanyEgyseg < 1 || hanyEgyseg > this.getSebesseg() || i + hanyEgyseg > 9){
+                            return false;
+                        }
+                        palya[i + hanyEgyseg][j] = firstLetter;
+                        palya[i][j] = " ";
+                        return true;
+                    }
+                }else if(merre == 4){
+                    if(palya[i][j].equals(firstLetter)){
+                        if(i == 0){
+                            return false;
+                        }
+                        if (hanyEgyseg < 1 || hanyEgyseg > this.getSebesseg() || i - hanyEgyseg < 0){
+                            return false;
+                        }
+                        palya[i - hanyEgyseg][j] = firstLetter;
+                        palya[i][j] = " ";
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public void ijjaszTamad(String[][] palya, int melyik, Egyseg[] ellenfel) {
+        boolean tudTamadni = true;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 12; j++) {
+                if(!palya[i+1][j].equals(" ") && !palya[i-1][j].equals(" ") && !palya[i][j+1].equals(" ") && !palya[i][j-1].equals(" ")){
+                    tudTamadni = false;
+                }
+            }
+        }
+        if(tudTamadni){
+            Random rnd = new Random();
+            int counter = 0;
+            for(Egyseg e : ellenfel){
+                if(e != null){
+                    counter++;
+                    if(counter == melyik){
+                        int sebzes = rnd.nextInt((e.getSebzes()[0] - e.getSebzes()[1]) + e.getSebzes()[0]) + e.getSebzes()[0];
+                    }
+                }
+            }
+        }
     }
 }

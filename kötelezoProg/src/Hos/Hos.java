@@ -18,36 +18,6 @@ public class Hos {
     protected int arany = 1000;
     protected int mana;
 
-    public Varazslat[] varazslat = new Varazslat[5];
-    public Egyseg[] egyseg = new Egyseg[5];
-
-    public Varazslat[] ellenfelVarazslat = new Varazslat[5];
-    public Egyseg[] ellenfelEgyseg = new Egyseg[5];
-
-    public Varazslat[] getEllenfelVarazslat() {
-        return ellenfelVarazslat;
-    }
-
-    public void setEllenfelVarazslat(Varazslat[] ellenfelVarazslat) {
-        this.ellenfelVarazslat = ellenfelVarazslat;
-    }
-
-    public Egyseg[] getEllenfelEgyseg() {
-        return ellenfelEgyseg;
-    }
-
-    public void setEllenfelEgyseg(Egyseg[] ellenfelEgyseg) {
-        this.ellenfelEgyseg = ellenfelEgyseg;
-    }
-
-    public Varazslat[] getVarazslat() {
-        return varazslat;
-    }
-
-    public Egyseg[] getEgyseg() {
-        return egyseg;
-    }
-
     public Hos createEllenfel(){
         Random rnd = new Random();
         Hos h = new Hos();
@@ -229,14 +199,6 @@ public class Hos {
         }
     }
 
-    public boolean vanKivalasztvaSereg(){
-        for(Egyseg e : egyseg){
-            if(e != null){
-                return true;
-            }
-        }
-        return false;
-    }
 
     public void ellenfelAdatai(){
         System.out.println();
@@ -250,17 +212,9 @@ public class Hos {
         System.out.println("Mana: "+getMana());
 
         System.out.println(Colors.ANSI_BLUE +"Az ellenfél varázserői:"+ Colors.ANSI_RESET);
-        for(Varazslat v : ellenfelVarazslat){
-            if(v != null){
-                System.out.println("Varázslat: " + v.getNev() + " db: "+ v.getDarab());
-            }
-        }
+
         System.out.println(Colors.ANSI_BLUE +"Az ellenfél egységei:"+ Colors.ANSI_RESET);
-        for(Egyseg v : ellenfelEgyseg){
-            if(v != null){
-                System.out.println("Egység: " + v.getNev() + " db: "+v.getDarab());
-            }
-        }
+
     }
 
     public void hosTamad(int egysegNeve, Egyseg[] egyseg){
@@ -276,7 +230,7 @@ public class Hos {
         }
     }
 
-    public Varazslat kivalasztottVarazslat(int num){
+    /*public Varazslat kivalasztottVarazslat(int num){
         int counter = 0;
         for(Varazslat v : getVarazslat()){
             if(v != null){
@@ -287,5 +241,6 @@ public class Hos {
             }
         }
         return null;
-    }
+    }*/
+
 }
