@@ -1,5 +1,6 @@
 package Varazslatok;
 
+import Egysegek.Egyseg;
 import Hos.Hos;
 
 public class Varazslat {
@@ -76,4 +77,49 @@ public class Varazslat {
             return true;
         }
     }
+
+    public void villamcsapas(Hos hos, Egyseg[] ellenfel, int egyseg){
+        int c = 0;
+        for (Egyseg e : ellenfel) {
+            if (e != null) {
+                c++;
+                if (c == egyseg) {
+                    e.setEletero(e.getEletero() - hos.getVarazsero() * 30);
+                    hos.csokkentMana(hos.getMana() - getMana());
+                }
+            }
+        }
+    }
+
+    public void nyilzapor(Hos hos, Egyseg[] ellenfel){
+        for (Egyseg e : ellenfel) {
+            if (e != null) {
+                e.setEletero(e.getEletero() - hos.getVarazsero() * 70);
+                hos.csokkentMana(hos.getMana() - getMana());
+            }
+        }
+    }
+
+    public Egyseg legnagyobbKezdemenyezesu(Egyseg[] ellenfel){
+        int max = 0;
+        for(Egyseg e : ellenfel){
+            if(e != null){
+                if(e.getKezdemenyezes() > max){
+                    max = e.getKezdemenyezes();
+                }
+                if(e.getKezdemenyezes() == max){
+                    return e;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void tornado(Hos hos, Egyseg[] ellenfel){
+        Egyseg l = legnagyobbKezdemenyezesu(ellenfel);
+        l.setEletero(0);
+        hos.csokkentMana(hos.getMana() - getMana());
+    }
+
+    public void feltamasztas(Hos hos, Egyseg[] hosEgyseg){}
 }

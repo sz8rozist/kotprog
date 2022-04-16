@@ -6,7 +6,6 @@ import Palya.Palya;
 import Varazslatok.*;
 import Colors.*;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -31,7 +30,7 @@ public class Game {
 
       //chooseLevel(nehezseg, hos, sc);
      // choosHosTulajdonsag(hos,sc);
-     // chooseVarazslatok(hos, sc, feltamasztas, tuzlabda, villamcsapas, tornado,nyilzapor);
+     chooseVarazslatok(hos, sc, feltamasztas, tuzlabda, villamcsapas, tornado,nyilzapor);
       chooseSereg(hos,sc, foldmuves, griff, ijasz);
       ellenfelBeallitas(feltamasztas, tuzlabda, villamcsapas, tornado, nyilzapor, foldmuves, griff, ijasz, ellenfel, rnd);
       egysegElhelyezese(p, hos,sc, ellenfel, rnd);
@@ -219,6 +218,9 @@ public class Game {
         int szam = 0;
         int hanyEgyseg = 0;
         int merre = 0;
+        int h = 0;
+        int kivalasztottVarazslat = 0;
+        int megtamadottEgyseg = 0;
         System.out.print(Colors.ANSI_GREEN + "Egységgel szeretnél lépni vagy a hősöddel? (e/h) "+ Colors.ANSI_RESET);
         karakter = sc.next();
         switch (karakter){
@@ -239,8 +241,64 @@ public class Game {
                     case 2:  break;
                     case 3: break;
                 }
-            case "h": break;
+            case "h":
+                System.out.print("1 - Támadás / 2 - Varázslás: ");
+                h = sc.nextInt();
+                if(h == 1){
+                    int c = 0;
+                    System.out.println("Az ellenfél egységei: ");
+                    for(Egyseg e : ellenfel.getEllenfelEgyseg()){
+                        if(e != null){
+                            c++;
+                            System.out.println(c+" - "+e.getNev()+ "eletero: "+ e.getEletero());
+                        }
+                    }
+                    System.out.print("Melyik egységet támadjuk: ");
+                    megtamadottEgyseg = sc.nextInt();
+                    hos.hosTamad(megtamadottEgyseg, ellenfel.getEllenfelEgyseg());
+                }else if(h == 2){
+                    System.out.println("Felhasználható varázslatok");
+                    int counter = 0;
+                    int c = 0;
+                    for(Varazslat v : hos.getVarazslat()){
+                        if(v != null){
+                            counter++;
+                            System.out.println(counter +" - "+v.getNev()+" / mana: "+ v.getMana());
+                        }
+                    }
+                    System.out.print("Melyik varázslatot választod?: ");
+                    kivalasztottVarazslat = sc.nextInt();
+                    Varazslat kivalasztott = hos.kivalasztottVarazslat(kivalasztottVarazslat);
+                    if(kivalasztott.getNev().equals("Villámcsapás")){
+                        System.out.println("Ellenfél egységei: ");
+                        for(Egyseg e : ellenfel.getEllenfelEgyseg()){
+                            if(e != null){
+                                c++;
+                                System.out.println(c+" - "+e.getNev()+ " eletero: "+ e.getEletero());
+                            }
+                        }
+                        System.out.print("Melyik egységre használnod a varázslást?: ");
+                        megtamadottEgyseg = sc.nextInt();
+                        kivalasztott.villamcsapas(hos, ellenfel.getEllenfelEgyseg(), megtamadottEgyseg);
+                    }
+                    if(kivalasztott.getNev().equals("Nyílzápor")){
+                        kivalasztott.nyilzapor(hos, ellenfel.getEllenfelEgyseg());
+                    }
+                    if(kivalasztott.getNev().equals("Tornádó")){
+                        kivalasztott.tornado(hos, ellenfel.getEllenfelEgyseg());
+                        for(Egyseg e : ellenfel.getEllenfelEgyseg()){
+                            if(e != null){
+                                c++;
+                                System.out.println(c+" - "+e.getNev()+ " eletero: "+ e.getEletero());
+                            }
+                        }
+                    }
+                    if(kivalasztott.getNev().equals("Feltámasztás")){
+
+                    }
+                }
+                break;
         }
-        p.printPalya();
+        //p.printPalya();
     }
 }

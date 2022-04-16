@@ -2,6 +2,8 @@ package Egysegek;
 
 import Hos.Hos;
 
+import java.util.Arrays;
+
 public class Egyseg {
     private String nev;
     private int darab;
@@ -120,5 +122,20 @@ public class Egyseg {
                     break;
                 }
             }
+    }
+
+    @Override
+    public String toString() {
+        return "Egyseg{" +
+                "nev='" + nev + '\'' +
+                ", darab=" + darab +
+                ", ar=" + ar +
+                ", sebzes=" + Arrays.toString(sebzes) +
+                ", eletero=" + eletero +
+                ", sebesseg=" + sebesseg +
+                ", kezdemenyezes=" + kezdemenyezes +
+                ", melyikOldalonAll='" + melyikOldalonAll + '\'' +
+                ", specialisKepesseg='" + specialisKepesseg + '\'' +
+                '}';
     }
 }

@@ -111,51 +111,51 @@ public class Palya {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 12; j++) {
                 if(merre == 1){
-                    if(!palya[i][j + hanyEgyseg].equals(" ")){
-                        break;
-                    }
-                    if(hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || j + hanyEgyseg > 12){
-                        break;
-                    }
                     if(palya[i][j].equals(firstLetter)){
+                        if(!palya[i][j + hanyEgyseg].equals(" ")){
+                            break;
+                        }
+                        if(hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || j + hanyEgyseg > 12){
+                            break;
+                        }
                         palya[i][j + hanyEgyseg] = firstLetter;
                         palya[i][j] = " ";
                         break;
                     }
                 }else if(merre == 2){
-                    if(!palya[i][j - hanyEgyseg].equals(" ")){
-                        break;
-                    }
-                    if (hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || j - hanyEgyseg <= 0){
-                        break;
-                    }
                     if(palya[i][j].equals(firstLetter)){
+                        if(!palya[i][j - hanyEgyseg].equals(" ")){
+                            break;
+                        }
+                        if (hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || j - hanyEgyseg < 0){
+                            break;
+                        }
                         palya[i][j - hanyEgyseg] = firstLetter;
                         palya[i][j] = " ";
                         break;
                     }
                 }else if(merre == 3){
-                    if(i == 9){
-                        System.out.println(Colors.ANSI_RED + "Hiba! Nem tudsz felfele lepni mert a palya szelen vagy." + Colors.ANSI_RESET);
-                        break;
-                    }
-                    if (hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || i + hanyEgyseg > 9){
-                        break;
-                    }
                     if(palya[i][j].equals(firstLetter)){
+                        if(i == 9){
+                            System.out.println(Colors.ANSI_RED + "Hiba! Nem tudsz felfele lepni mert a palya szelen vagy." + Colors.ANSI_RESET);
+                            break;
+                        }
+                        if (hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || i + hanyEgyseg > 9){
+                            break;
+                        }
                         palya[i + hanyEgyseg][j] = firstLetter;
                         palya[i][j] = " ";
                         break;
                     }
                 }else if(merre == 4){
-                    if(i == 0){
-                        System.out.println(Colors.ANSI_RED + "Hiba! Nem tudsz felfele lepni mert a palya szelen vagy." + Colors.ANSI_RESET);
-                        break;
-                    }
-                    if (hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || i - hanyEgyseg < 0){
-                        break;
-                    }
                     if(palya[i][j].equals(firstLetter)){
+                        if(i == 0){
+                            System.out.println(Colors.ANSI_RED + "Hiba! Nem tudsz felfele lepni mert a palya szelen vagy." + Colors.ANSI_RESET);
+                            break;
+                        }
+                        if (hanyEgyseg < 1 || hanyEgyseg > legnagyobbKezdemenyezesu.getSebesseg() || i - hanyEgyseg < 0){
+                            break;
+                        }
                         palya[i - hanyEgyseg][j] = firstLetter;
                         palya[i][j] = " ";
                         break;

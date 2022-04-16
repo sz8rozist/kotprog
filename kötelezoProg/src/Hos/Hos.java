@@ -157,6 +157,10 @@ public class Hos {
             this.szerencse = szerencse;
     }
 
+    public void csokkentMana(int mana){
+        this.mana = mana;
+    }
+
     public Hos() {
         this.tamadas = 1;
         this.vedekezes = 1;
@@ -233,6 +237,7 @@ public class Hos {
         }
         return false;
     }
+
     public void ellenfelAdatai(){
         System.out.println();
         System.out.println(Colors.ANSI_BLUE + "Az ellenfél adatai"+ Colors.ANSI_RESET);
@@ -258,7 +263,29 @@ public class Hos {
         }
     }
 
-    public void hosTamad(Egyseg ellenfelEgyseg){
-        ellenfelEgyseg.setEletero(ellenfelEgyseg.getEletero() - this.getTamadas() * 10);
+    public void hosTamad(int egysegNeve, Egyseg[] egyseg){
+        int counter = 0;
+        for(Egyseg e : egyseg){
+            if(e != null){
+                counter++;
+                if(counter == egysegNeve){
+                    int tamadas = e.getEletero() - (getTamadas() * 10);
+                    e.setEletero(tamadas);
+                }
+            }
+        }
+    }
+
+    public Varazslat kivalasztottVarazslat(int num){
+        int counter = 0;
+        for(Varazslat v : getVarazslat()){
+            if(v != null){
+                counter++;
+                if(counter == num){
+                    return v;
+                }
+            }
+        }
+        return null;
     }
 }
