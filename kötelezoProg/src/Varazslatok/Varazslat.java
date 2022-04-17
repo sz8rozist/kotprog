@@ -1,13 +1,12 @@
 package Varazslatok;
 
-import Egysegek.Egyseg;
 import Hos.Hos;
 
 public class Varazslat {
-    private int ar;
-    private int mana;
-    private String nev;
-    private int darab;
+    protected int ar;
+    protected int mana;
+    protected String nev;
+    protected int darab;
 
     public Varazslat(){
 

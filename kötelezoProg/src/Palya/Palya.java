@@ -1,7 +1,6 @@
 package Palya;
 
 import Egysegek.Egyseg;
-import Colors.*;
 
 public class Palya {
     String [][] palya = new String[11][13];
@@ -55,6 +54,13 @@ public class Palya {
         }
     }
 
+    /***
+     * A metódus elhelyezi a pályára a kiválasztott egységet.
+     * @param e Az egység amely elhelyezésre kerül.
+     * @param oszlop A pályán kijelölt oszlop.
+     * @param sor A pályán kijelölt sor.
+     * @return true ha sikeres volt az elhelyezés, false hogyha a kiválasztott mező foglalt.
+     */
     public boolean egysegElhelyezes(Egyseg e, String oszlop, int sor){
         if(oszlop.equals("A") || oszlop.equals("B")){
             for (int i = 0; i < 11; i++) {
@@ -73,6 +79,13 @@ public class Palya {
         return false;
     }
 
+    /***
+     * Az ellenfél egységeinek elhelyezése
+     * @param e Az ellenfél egységet amelyet el helyez a pályán
+     * @param oszlop Az oszlop amelyikbe elhelyezi
+     * @param sor A sor amelyiket elhelyezi
+     * @return true ha sikeres, false ha az adott mezőn már van karakter.
+     */
     public boolean ellenfelEgysegeinekElhelyezese(Egyseg e, String oszlop, int sor){
         for (int i = 0; i < 11; i++) {
             for (int j = 0; j < 13; j++) {

@@ -1,15 +1,6 @@
 package Hos;
-
-import Colors.Colors;
 import Egysegek.Egyseg;
-import Varazslatok.Feltamasztas;
-import Varazslatok.Varazslat;
-
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 public class Hos {
     protected int tamadas;
@@ -19,7 +10,7 @@ public class Hos {
     protected int moral;
     protected int szerencse;
     protected double ar;
-    protected int arany = 1000;
+    protected int arany;
     protected int mana;
 
     public Hos createEllenfel(){
@@ -127,6 +118,7 @@ public class Hos {
     public int getSzerencse() {
         return szerencse;
     }
+
     public void setSzerencse(int szerencse) {
             this.szerencse = szerencse;
     }

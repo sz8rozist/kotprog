@@ -2,10 +2,6 @@ package Egysegek;
 
 import Hos.Hos;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
-
 public class Egyseg {
     private String nev;
     private int darab;
@@ -73,14 +69,6 @@ public class Egyseg {
         this.kezdemenyezes = kezdemenyezes;
     }
 
-    public String getMelyikOldalonAll() {
-        return melyikOldalonAll;
-    }
-
-    public void setMelyikOldalonAll(String melyikOldalonAll) {
-        this.melyikOldalonAll = melyikOldalonAll;
-    }
-
     public String getSpecialisKepesseg() {
         return specialisKepesseg;
     }
@@ -93,7 +81,7 @@ public class Egyseg {
 
     }
 
-    public Egyseg(String nev, int ar, int[] sebzes, int eletero, int sebesseg, int kezdemenyezes, String melyikOldalonAll, String specialisKepesseg, int darab) {
+    public Egyseg(String nev, int ar, int[] sebzes, int eletero, int sebesseg, int kezdemenyezes, String specialisKepesseg, int darab) {
         this.nev = nev;
         this.ar = ar;
         this.sebzes = sebzes;
@@ -107,10 +95,10 @@ public class Egyseg {
 
     public void egysegVasarlas(Hos h, int darab){
         setDarab(darab);
-        setEletero(darab * this.getEletero());
+        //setEletero(darab * this.getEletero());
         setKezdemenyezes(h.getMoral() + getKezdemenyezes());
-        int[] s = {darab * getSebzes()[0], darab * getSebzes()[1]};
-        setSebzes(s);
+        //int[] s = {darab * getSebzes()[0], darab * getSebzes()[1]};
+        //setSebzes(s);
         if(h.vanelegArany(this.getAr() * darab)){
             int arany = h.getArany();
             arany -= this.getDarab() * this.getAr();
@@ -180,26 +168,4 @@ public class Egyseg {
         return false;
     }
 
-    public void ijjaszTamad(String[][] palya, int melyik, Egyseg[] ellenfel) {
-        boolean tudTamadni = true;
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 12; j++) {
-                if(!palya[i+1][j].equals(" ") && !palya[i-1][j].equals(" ") && !palya[i][j+1].equals(" ") && !palya[i][j-1].equals(" ")){
-                    tudTamadni = false;
-                }
-            }
-        }
-        if(tudTamadni){
-            Random rnd = new Random();
-            int counter = 0;
-            for(Egyseg e : ellenfel){
-                if(e != null){
-                    counter++;
-                    if(counter == melyik){
-                        int sebzes = rnd.nextInt((e.getSebzes()[0] - e.getSebzes()[1]) + e.getSebzes()[0]) + e.getSebzes()[0];
-                    }
-                }
-            }
-        }
-    }
 }
