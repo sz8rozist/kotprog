@@ -45,7 +45,9 @@ public class Game {
         chooseSereg(hos,sc, foldmuves, griff, ijasz);
         ellenfelBeallitas(ellenfelFeltamasztas, ellenfelTuzlabda, ellenfelVillamcsapas, ellenfelTornado, ellenfelNyilzapor, ellenfelFoldmuves, ellenfelGriff, ellenfelIjjasz, ellenfel, rnd);
         egysegElhelyezese(p, hos,sc, ellenfel, rnd, foldmuves, griff, ijasz);
-        jatek(hos, ellenfel, p, sc, foldmuves, griff, ijasz);
+        hosAdatok(hos);
+        ellenfelAdatai(ellenfel, ellenfelFeltamasztas, ellenfelNyilzapor, ellenfelTornado, ellenfelTuzlabda, ellenfelVillamcsapas, ellenfelFoldmuves, ellenfelGriff, ellenfelIjjasz);
+        jatek(hos, ellenfel, p, sc, foldmuves, griff, ijasz, ellenfelFoldmuves, ellenfelGriff, ellenfelIjjasz, feltamasztas, nyilzapor, tornado, tuzlabda, villamcsapas);
     }
     public static void chooseLevel(int nehezseg, Hos hos, Scanner sc){
         System.out.println(Colors.ANSI_BLUE +"<----------------------------- Válaszd ki a nehézségi szintet! ----------------------------->"+Colors.ANSI_RESET);
@@ -139,6 +141,7 @@ public class Game {
                     }
                 }
             }
+            System.out.println(feltamasztas.getNev() + feltamasztas.getDarab());
         }while(darab != 10);
     }
     public static void chooseSereg(Hos hos, Scanner sc, Foldmuves foldmuves, Griff griff, Ijasz ijasz){
@@ -178,7 +181,6 @@ public class Game {
                         }
                         ijasz.egysegVasarlas(hos,db);
                     }
-
                 }
             }while(d != 10);
     }
@@ -225,10 +227,8 @@ public class Game {
         griff.egysegVasarlas(ellenfel, rnd.nextInt((6 - 1) + 1) + 1);
         ijasz.egysegVasarlas(ellenfel, rnd.nextInt((6 - 1) + 1) + 1);
     }
-    public static void jatek(Hos hos, Hos ellenfel, Palya p, Scanner sc, Foldmuves f, Griff g, Ijasz i){
+    public static void jatek(Hos hos, Hos ellenfel, Palya p, Scanner sc, Foldmuves f, Griff g, Ijasz i, Foldmuves ellenfelF, Griff ellenfelGriff, Ijasz ellenfelIjasz, Feltamasztas feltamasztas, Nyilzapor nyilzapor, Tornado tornado, Tuzlabda tuzlabda, Villamcsapas villamcsapas){
         System.out.println(Colors.ANSI_BLUE +"<----------------------------- Kezdődjön a játék! ----------------------------->"+Colors.ANSI_RESET);
-        hosAdatok(hos);
-        ellenfel.ellenfelAdatai();
         p.printPalya();
         int kor = 0;
         String karakter;
@@ -240,18 +240,23 @@ public class Game {
         int megtamadottEgyseg = 0;
         while(f.getDarab() == 0 || g.getDarab() == 0 || i.getDarab() == 0){
             kor++;
-           //Egyseg[] sortedEgyseg = hos.legnagyobbKezdemenyezesu(hos.getEgyseg());
+            //Egyseg[] sortedEgyseg = hos.legnagyobbKezdemenyezesu(hos.getEgyseg());
             //System.out.println(Arrays.toString(hos.legnagyobbKezdemenyezesu(hos.getEgyseg())));
+            Egyseg legnagyobbKezdemenyezesu = null;
+            if(g.getDarab() > 0){
+                legnagyobbKezdemenyezesu  = new Griff();
+            }
             System.out.println(Colors.ANSI_PURPLE+"Kör: "+kor+Colors.ANSI_RESET);
             System.out.print(Colors.ANSI_GREEN + "Egységgel szeretnél lépni vagy a hősöddel? (e/h): "+ Colors.ANSI_RESET);
             karakter = sc.next();
-            /*switch (karakter) {
+            switch (karakter) {
                 case "e" -> {
                     System.out.println("1 - Mozgás");
                     System.out.println("2 - Várakozás");
                     System.out.println("3 - Támadás");
                     System.out.print("Mit szeretnél tenni az egységgel?: ");
                     szam = sc.nextInt();
+                    assert legnagyobbKezdemenyezesu != null;
                     System.out.println(legnagyobbKezdemenyezesu.getNev());
                     if (szam == 1) {
                         do{
@@ -266,14 +271,11 @@ public class Game {
                         int c = 0;
                         if(legnagyobbKezdemenyezesu.getNev().equals("Íjjász")){
                             System.out.print("Melyik egységet támadjuk?: ");
-                            for (Egyseg e : ellenfel.getEllenfelEgyseg()) {
-                                if (e != null) {
-                                    c++;
-                                    System.out.println(c + " - " + e.getNev() + " / eletero: " + e.getEletero());
-                                }
-                            }
+                            System.out.println(ellenfelF.getNev() + " (életerő: "+ ellenfelF.getEletero()+")");
+                            System.out.println(ellenfelGriff.getNev() + " (életerő: "+ ellenfelGriff.getEletero()+")");
+                            System.out.println(ellenfelIjasz.getNev() + " (életerő: "+ ellenfelIjasz.getEletero()+")");
                             melyik = sc.nextInt();
-                            legnagyobbKezdemenyezesu.ijjaszTamad(p.getPalya(), melyik, ellenfel.getEllenfelEgyseg());
+                           // legnagyobbKezdemenyezesu.ijjaszTamad(p.getPalya(), melyik, ellenfel.getEllenfelEgyseg());
                         }
                     }
                 }
@@ -283,58 +285,70 @@ public class Game {
                     if (h == 1) {
                         int c = 0;
                         System.out.println("Az ellenfél egységei: ");
-                        for (Egyseg e : ellenfel.getEllenfelEgyseg()) {
-                            if (e != null) {
-                                c++;
-                                System.out.println(c + " - " + e.getNev() + " / eletero: " + e.getEletero());
-                            }
-                        }
+                        System.out.println("1 - "+ellenfelF.getNev() + " (életerő: "+ ellenfelF.getEletero()+")");
+                        System.out.println("2 - "+ellenfelGriff.getNev() + " (életerő: "+ ellenfelGriff.getEletero()+")");
+                        System.out.println("3 - "+ellenfelIjasz.getNev() + " (életerő: "+ ellenfelIjasz.getEletero()+")");
                         System.out.print("Melyik egységet támadjuk: ");
                         megtamadottEgyseg = sc.nextInt();
-                        hos.hosTamad(megtamadottEgyseg, ellenfel.getEllenfelEgyseg());
+                        if(megtamadottEgyseg == 1){
+                            hos.hosTamad(ellenfelF);
+                        }
+                        if(megtamadottEgyseg == 2){
+                            hos.hosTamad(ellenfelGriff);
+                        }
+                        if(megtamadottEgyseg == 3){
+                            hos.hosTamad(ellenfelIjasz);
+                        }
+
                     } else if (h == 2) {
                         System.out.println("Felhasználható varázslatok");
-                        int counter = 0;
-                        int c = 0;
-                        for (Varazslat v : hos.getVarazslat()) {
-                            if (v != null) {
-                                counter++;
-                                System.out.println(counter + " - " + v.getNev() + "(mana: " + v.getMana()+")");
-                            }
+                        if(villamcsapas.getDarab() > 0){
+                            System.out.println("1 - "+villamcsapas.getNev() + " (mana: "+ villamcsapas.getMana()+")");
+                        }
+                        if(feltamasztas.getDarab() > 0){
+                            System.out.println("2 - "+feltamasztas.getNev() + " (mana: "+ feltamasztas.getMana()+")");
+                        }
+                        if(nyilzapor.getDarab() > 0){
+                            System.out.println("3 - "+nyilzapor.getNev() + " (mana: "+ nyilzapor.getMana()+")");
+                        }
+                        if(tuzlabda.getDarab() > 0){
+                            System.out.println("4 - "+tuzlabda.getNev() + " (mana: "+ tuzlabda.getMana()+")");
+                        }
+                        if(tornado.getDarab() > 0){
+                            System.out.println("5 - "+tornado.getNev() + " (mana: "+ tornado.getMana()+")");
                         }
                         System.out.print("Melyik varázslatot választod?: ");
                         kivalasztottVarazslat = sc.nextInt();
-                        Varazslat kivalasztott = hos.kivalasztottVarazslat(kivalasztottVarazslat);
-                        if (kivalasztott.getNev().equals("Villámcsapás")) {
-                            System.out.println("Ellenfél egységei: ");
-                            for (Egyseg e : ellenfel.getEllenfelEgyseg()) {
-                                if (e != null) {
-                                    c++;
-                                    System.out.println(c + " - " + e.getNev() + " eletero: " + e.getEletero());
+                        switch (kivalasztottVarazslat){
+                            case 1:
+                                System.out.println("Ellenfél egységei: ");
+                                System.out.println("1 - "+ellenfelF.getNev() + " (életerő: "+ ellenfelF.getEletero()+")");
+                                System.out.println("2 - "+ellenfelGriff.getNev() + " (életerő: "+ ellenfelGriff.getEletero()+")");
+                                System.out.println("3 - "+ellenfelIjasz.getNev() + " (életerő: "+ ellenfelIjasz.getEletero()+")");
+                                System.out.print("Melyik egységre használnod a varázslást?: ");
+                                megtamadottEgyseg = sc.nextInt();
+                                if(megtamadottEgyseg == 1){
+                                    villamcsapas.villamcsapas(hos, ellenfelF);
                                 }
-                            }
-                            System.out.print("Melyik egységre használnod a varázslást?: ");
-                            megtamadottEgyseg = sc.nextInt();
-                            kivalasztott.villamcsapas(hos, ellenfel.getEllenfelEgyseg(), megtamadottEgyseg);
-                        }
-                        if (kivalasztott.getNev().equals("Nyílzápor")) {
-                            kivalasztott.nyilzapor(hos, ellenfel.getEllenfelEgyseg());
-                        }
-                        if (kivalasztott.getNev().equals("Tornádó")) {
-                            kivalasztott.tornado(hos, ellenfel.getEllenfelEgyseg());
-                            for (Egyseg e : ellenfel.getEllenfelEgyseg()) {
-                                if (e != null) {
-                                    c++;
-                                    System.out.println(c + " - " + e.getNev() + " eletero: " + e.getEletero());
+                                if(megtamadottEgyseg == 2){
+                                    villamcsapas.villamcsapas(hos, ellenfelGriff);
                                 }
-                            }
-                        }
-                        if (kivalasztott.getNev().equals("Feltámasztás")) {
-
+                                if(megtamadottEgyseg == 3){
+                                    villamcsapas.villamcsapas(hos, ellenfelIjasz);
+                                }
+                                break;
+                            case 2: /*feltámasztás*/ break;
+                            case 3:
+                                nyilzapor.nyilzapor(hos, ellenfelF, ellenfelGriff, ellenfelIjasz);
+                                break;
+                            case 4: /*tuzlabda*/ break;
+                            case 5:
+                                tornado.tornado(hos, ellenfelF, ellenfelGriff, ellenfelIjasz);
+                                break;
                         }
                     }
                 }
-            }*/
+            }
             p.printPalya();
         }
     }
@@ -348,5 +362,43 @@ public class Game {
         System.out.println("Morál: "+h.getMoral());
         System.out.println("Szerencse: "+h.getSzerencse());
         System.out.println("Mana: "+h.getMana());
+    }
+    public static void ellenfelAdatai(Hos h, Feltamasztas f, Nyilzapor ny, Tornado t, Tuzlabda tu, Villamcsapas v, Foldmuves fold, Griff g, Ijasz i){
+        System.out.println();
+        System.out.println(Colors.ANSI_BLUE + "Az ellenfél adatai"+ Colors.ANSI_RESET);
+        System.out.println("Támadás: "+h.getTamadas());
+        System.out.println("Védekezés: "+h.getVedekezes());
+        System.out.println("Varázserő: "+h.getVarazsero());
+        System.out.println("Tudás: "+h.getTudas());
+        System.out.println("Morál: "+h.getMoral());
+        System.out.println("Szerencse: "+h.getSzerencse());
+        System.out.println("Mana: "+h.getMana());
+
+        System.out.println(Colors.ANSI_BLUE +"Az ellenfél varázserői:"+ Colors.ANSI_RESET);
+        if(f.getDarab() != 0){
+            System.out.println(f.getNev());
+        }
+        if(ny.getDarab() != 0){
+            System.out.println(ny.getNev());
+        }
+        if(t.getDarab() != 0){
+            System.out.println(t.getNev());
+        }
+        if(tu.getDarab() != 0){
+            System.out.println(tu.getNev());
+        }
+        if(v.getDarab() != 0){
+            System.out.println(v.getNev());
+        }
+        System.out.println(Colors.ANSI_BLUE +"Az ellenfél egységei:"+ Colors.ANSI_RESET);
+        if(fold.getDarab() != 0){
+            System.out.println(fold.getNev());
+        }
+        if(g.getDarab() != 0){
+            System.out.println(g.getNev());
+        }
+        if(i.getDarab() != 0){
+            System.out.println(i.getNev());
+        }
     }
 }

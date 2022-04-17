@@ -71,46 +71,4 @@ public class Varazslat {
         }
     }
 
-    public void villamcsapas(Hos hos, Egyseg[] ellenfel, int egyseg){
-        int c = 0;
-        for (Egyseg e : ellenfel) {
-            if (e != null) {
-                c++;
-                if (c == egyseg) {
-                    e.setEletero(e.getEletero() - hos.getVarazsero() * 30);
-                    hos.csokkentMana(hos.getMana() - getMana());
-                }
-            }
-        }
-    }
-
-    public void nyilzapor(Hos hos, Egyseg[] ellenfel){
-        for (Egyseg e : ellenfel) {
-            if (e != null) {
-                e.setEletero(e.getEletero() - hos.getVarazsero() * 70);
-                hos.csokkentMana(hos.getMana() - getMana());
-            }
-        }
-    }
-
-
-    public void tornado(Hos hos, Egyseg[] ellenfel){
-        int max = 0;
-        Egyseg l = null;
-        for(Egyseg e : ellenfel){
-            if(e != null){
-                if(e.getKezdemenyezes() > max){
-                    max = e.getKezdemenyezes();
-                }
-                if(e.getKezdemenyezes() == max){
-                    l = e;
-                }
-            }
-        }
-        assert l != null;
-        l.setEletero(0);
-        hos.csokkentMana(hos.getMana() - getMana());
-    }
-
-    public void feltamasztas(Hos hos, Egyseg[] hosEgyseg){}
 }

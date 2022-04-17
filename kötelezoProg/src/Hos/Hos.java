@@ -5,7 +5,11 @@ import Egysegek.Egyseg;
 import Varazslatok.Feltamasztas;
 import Varazslatok.Varazslat;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class Hos {
     protected int tamadas;
@@ -199,48 +203,9 @@ public class Hos {
         }
     }
 
-
-    public void ellenfelAdatai(){
-        System.out.println();
-        System.out.println(Colors.ANSI_BLUE + "Az ellenfél adatai"+ Colors.ANSI_RESET);
-        System.out.println("Támadás: "+getTamadas());
-        System.out.println("Védekezés: "+getVedekezes());
-        System.out.println("Varázserő: "+getVarazsero());
-        System.out.println("Tudás: "+getTudas());
-        System.out.println("Morál: "+getMoral());
-        System.out.println("Szerencse: "+getSzerencse());
-        System.out.println("Mana: "+getMana());
-
-        System.out.println(Colors.ANSI_BLUE +"Az ellenfél varázserői:"+ Colors.ANSI_RESET);
-
-        System.out.println(Colors.ANSI_BLUE +"Az ellenfél egységei:"+ Colors.ANSI_RESET);
-
+    public void hosTamad(Egyseg egyseg){
+        int tamadas = egyseg.getEletero() - (getTamadas() * 10);
+        egyseg.setEletero(tamadas);
     }
-
-    public void hosTamad(int egysegNeve, Egyseg[] egyseg){
-        int counter = 0;
-        for(Egyseg e : egyseg){
-            if(e != null){
-                counter++;
-                if(counter == egysegNeve){
-                    int tamadas = e.getEletero() - (getTamadas() * 10);
-                    e.setEletero(tamadas);
-                }
-            }
-        }
-    }
-
-    /*public Varazslat kivalasztottVarazslat(int num){
-        int counter = 0;
-        for(Varazslat v : getVarazslat()){
-            if(v != null){
-                counter++;
-                if(counter == num){
-                    return v;
-                }
-            }
-        }
-        return null;
-    }*/
 
 }
